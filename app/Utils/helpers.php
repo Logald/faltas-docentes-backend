@@ -23,6 +23,13 @@ if (!function_exists('searchMany')) {
       }
       $data = $data->where($key, '=', $value);
     }
+    if (count($data) == 1) {
+      $formatData = [];
+      foreach ($data as $key => $value) {
+        array_push($formatData, $data[$key]);
+      }
+      return $formatData;
+    }
     return $data;
   }
 }

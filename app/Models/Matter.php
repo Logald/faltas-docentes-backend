@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Matter extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $table = 'matter';
+  protected $fillable = [
+    "name",
+    "description"
+  ];
+  public $timestamps = false;
 }
