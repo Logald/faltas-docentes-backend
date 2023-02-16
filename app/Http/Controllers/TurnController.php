@@ -7,80 +7,70 @@ use Illuminate\Http\Request;
 
 class TurnController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        return response()->json(Turn::all());
-    }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getTurns(Request $request)
+  {
+    $turns = Turn::all();
+    $args = [];
+    if (isset($request['id']))
+      $args['id'] = $request->id;
+    if (isset($request['name']))
+      $args['name'] = $request->name;
+    $data = searchMany($turns, $args);
+    return response()->json($data);
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  /**
+   * Display a resource.
+   *
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getTurn(Turn $turn)
+  {
+    return response()->json($turn);
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  /**
+   *
+   *
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function create(Request $request)
+  {
+    Turn::create([
+      'name' => $request->name
+    ]);
+    return response()->json(true);
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Turn  $turn
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Turn $turn)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Turn  $turn
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Turn $turn)
-    {
-        //
-    }
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Models\Turn  $turn
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function update(Request $request, Turn $turn)
+  {
+    $turn->name = $request->name;
+    $turn->save();
+    return response()->json(true);
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Turn  $turn
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Turn $turn)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Turn  $turn
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Turn $turn)
-    {
-        //
-    }
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  \App\Models\Turn  $turn
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function delete(Turn $turn)
+  {
+    $turn->delete();
+    return response()->json(true);
+  }
 }

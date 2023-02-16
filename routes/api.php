@@ -15,7 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 });
 
-Route::get('/turns', 'App\Http\Controllers\TurnController@index');
+// Turns
+Route::post('/turns', 'App\Http\Controllers\TurnController@getTurns');
+Route::post('/turns/{turn}', 'App\Http\Controllers\TurnController@getTurn');
+Route::post('/turns/create', 'App\Http\Controllers\TurnController@create');
+Route::put('/turns/{turn}', 'App\Http\Controllers\TurnController@update');
+Route::delete('/turns/{turn}', 'App\Http\Controllers\TurnController@delete');

@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Turn extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'turn';
+  protected $table = 'turn';
+  protected $fillable = [
+    "name"
+  ];
+  public $timestamps = false;
 }
