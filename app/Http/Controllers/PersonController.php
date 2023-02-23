@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Turn;
+use App\Models\Person;
 use Illuminate\Http\Request;
 
-class TurnController extends Controller
+class PersonController extends Controller
 {
   /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getTurns(Request $request)
+  public function getPeople(Request $request)
   {
-    $turns = Turn::all();
-    $args = ['id', 'name'];
+    $people = Person::all();
+    $args = ['id', 'name', 'lastname', 'ci'];
     $data = getFromRequestIfExist($request, $args);
-    $turns = searchMany($turns, $data);
-    return response()->json($turns);
+    $people = searchMany($people, $data);
+    return response()->json($people);
   }
 
   /**
@@ -26,9 +26,9 @@ class TurnController extends Controller
    *
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getTurn(Turn $turn)
+  public function getPerson(Person $person)
   {
-    return response()->json($turn);
+    return response()->json($person);
   }
 
   /**
@@ -38,8 +38,10 @@ class TurnController extends Controller
    */
   public function create(Request $request)
   {
-    Turn::create([
-      'name' => $request->name
+    Person::create([
+      'name' => $request->name,
+      'lastname' => $request->lastname,
+      'ci' => $request->ci
     ]);
     return response()->json(true);
   }
@@ -49,26 +51,26 @@ class TurnController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Turn  $turn
+   * @param  \App\Models\Person  $person
    * @return \Illuminate\Http\JsonResponse
    */
-  public function update(Request $request, Turn $turn)
+  public function update(Request $request, Person $person)
   {
-    $args = ['name'];
-    mergeObjects($args, $turn, $request);
-    $turn->save();
+    $args = ['name', 'lastname', 'ci'];
+    mergeObjects($args, $person, $request);
+    $person->save();
     return response()->json(true);
   }
 
   /**
    * Remove the specified resource from storage.
    *
-   * @param  \App\Models\Turn  $turn
+   * @param  \App\Models\Person  $person
    * @return \Illuminate\Http\JsonResponse
    */
-  public function delete(Turn $turn)
+  public function delete(Person $person)
   {
-    $turn->delete();
+    $person->delete();
     return response()->json(true);
   }
 }

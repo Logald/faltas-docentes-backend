@@ -15,14 +15,9 @@ class MatterController extends Controller
   public function getMatters(Request $request)
   {
     $matters = Matter::all();
-    $args = [];
-    if (isset($request['id']))
-      $args['id'] = $request->id;
-    if (isset($request['name']))
-      $args['name'] = $request->name;
-    if (isset($request['description']))
-      $args['description'] = $request->description;
-    $matters = searchMany($matters, $args);
+    $args = ['id', 'name', 'description'];
+    $data = getFromRequestIfExist($request, $args);
+    $matters = searchMany($matters, $data);
     return response()->json($matters);
   }
 
@@ -60,8 +55,8 @@ class MatterController extends Controller
    */
   public function update(Request $request, Matter $matter)
   {
-    $matter->name = $request->name;
-    $matter->description = $request->description;
+    $args = ['name', 'description'];
+    mergeObjects($args, $matter, $request);
     $matter->save();
     return response()->json(true);
   }
