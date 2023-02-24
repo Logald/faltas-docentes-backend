@@ -74,3 +74,12 @@ Route::post('/mgs/{mg}/all', 'App\Http\Controllers\MgController@getMgWithRelatio
 Route::post('/mgs/{mg}', 'App\Http\Controllers\MgController@getMg');
 Route::put('/mgs/{mg}', 'App\Http\Controllers\MgController@update');
 Route::delete('/mgs/{mg}', 'App\Http\Controllers\MgController@delete');
+
+// gmp
+Route::post('/gmps', 'App\Http\Controllers\GmpController@getGmps');
+Route::post('/gmps/all', 'App\Http\Controllers\GmpController@getGmpsWithRelations');
+Route::post('/gmps/create', 'App\Http\Controllers\GmpController@create');
+Route::post('/gmps/{gmp}/all', 'App\Http\Controllers\GmpController@getGmpWithRelations');
+Route::post('/gmps/{gmp}', 'App\Http\Controllers\GmpController@getGmp');
+Route::put('/gmps/{gmp}', 'App\Http\Controllers\GmpController@update');
+Route::delete('/gmps/{gmp}', 'App\Http\Controllers\GmpController@delete');

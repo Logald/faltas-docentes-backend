@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gmp extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $table = 'gmp';
+  protected $fillable = [
+    'mgId',
+    'proffessorId'
+  ];
+  public $timestamps = false;
 }
