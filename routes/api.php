@@ -38,3 +38,12 @@ Route::post('/people/create', 'App\Http\Controllers\PersonController@create');
 Route::post('/people/{person}', 'App\Http\Controllers\PersonController@getPerson');
 Route::put('/people/{person}', 'App\Http\Controllers\PersonController@update');
 Route::delete('/people/{person}', 'App\Http\Controllers\PersonController@delete');
+
+// proffessor
+Route::post('/proffessors', 'App\Http\Controllers\ProffessorController@getProffessors');
+Route::post('/proffessors/all', 'App\Http\Controllers\ProffessorController@getProffessorsWithRelations');
+Route::post('/proffessors/create', 'App\Http\Controllers\ProffessorController@create');
+Route::post('/proffessors/{proffessor}/all', 'App\Http\Controllers\ProffessorController@getPersonWithRelations');
+Route::post('/proffessors/{proffessor}', 'App\Http\Controllers\ProffessorController@getProffessor');
+Route::put('/proffessors/{proffessor}', 'App\Http\Controllers\ProffessorController@update');
+Route::delete('/proffessors/{proffessor}', 'App\Http\Controllers\ProffessorController@delete');
