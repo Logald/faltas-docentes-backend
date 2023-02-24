@@ -1,8 +1,7 @@
 <?php
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -17,7 +16,8 @@ if (!function_exists('searchMany')) {
   {
     foreach ($args as $key => $value) {
       if ($key === 'startDate') {
-        $data = $data->where($key, '>=', $value);
+        $beforeDay = (new DateTime($value))->format('Y-m-d H-i-s');
+        $data = $data->where($key, '>=', $beforeDay);
         continue;
       }
       if ($key === 'endDate') {
@@ -26,7 +26,10 @@ if (!function_exists('searchMany')) {
       }
       $data = $data->where($key, '=', $value);
     }
-    if (!isset($data[0]->id)) {
+    $format = false;
+    if (!is_array($data))
+      $format = true;
+    if ($format) {
       $formatData = [];
       foreach ($data as $key => $value) {
         array_push($formatData, $data[$key]);

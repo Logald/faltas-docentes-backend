@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Absence;
 use App\Models\Gmp;
 use App\Models\Turn;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AbsenceController extends Controller
