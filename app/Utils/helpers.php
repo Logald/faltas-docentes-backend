@@ -26,10 +26,7 @@ if (!function_exists('searchMany')) {
       }
       $data = $data->where($key, '=', $value);
     }
-    $format = false;
-    if (!is_array($data))
-      $format = true;
-    if ($format) {
+    if (!is_array($data)) {
       $formatData = [];
       foreach ($data as $key => $value) {
         array_push($formatData, $data[$key]);
