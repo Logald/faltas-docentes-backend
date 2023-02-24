@@ -83,3 +83,12 @@ Route::post('/gmps/{gmp}/all', 'App\Http\Controllers\GmpController@getGmpWithRel
 Route::post('/gmps/{gmp}', 'App\Http\Controllers\GmpController@getGmp');
 Route::put('/gmps/{gmp}', 'App\Http\Controllers\GmpController@update');
 Route::delete('/gmps/{gmp}', 'App\Http\Controllers\GmpController@delete');
+
+// absences
+Route::post('/absences', 'App\Http\Controllers\AbsenceController@getAbsences');
+Route::post('/absences/all', 'App\Http\Controllers\AbsenceController@getAbsencesWithRelations');
+Route::post('/absences/create', 'App\Http\Controllers\AbsenceController@create');
+Route::post('/absences/{absence}/all', 'App\Http\Controllers\AbsenceController@getAbsenceWithRelations');
+Route::post('/absences/{absence}', 'App\Http\Controllers\AbsenceController@getAbsence');
+Route::put('/absences/{absence}', 'App\Http\Controllers\AbsenceController@update');
+Route::delete('/absences/{absence}', 'App\Http\Controllers\AbsenceController@delete');
