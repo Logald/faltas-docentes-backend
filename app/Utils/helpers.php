@@ -25,7 +25,7 @@ if (!function_exists('searchMany')) {
       }
       $data = $data->where($key, '=', $value);
     }
-    if (count($data) == 1) {
+    if (!isset($data[0]->id)) {
       $formatData = [];
       foreach ($data as $key => $value) {
         array_push($formatData, $data[$key]);

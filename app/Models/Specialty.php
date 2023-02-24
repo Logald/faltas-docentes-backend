@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Specialty extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $table = 'specialty';
+  protected $fillable = [
+    'matterId',
+    'proffessorId'
+  ];
+  public $timestamps = false;
 }

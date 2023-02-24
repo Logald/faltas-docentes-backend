@@ -56,3 +56,12 @@ Route::post('/groups/{group}/all', 'App\Http\Controllers\GroupController@getGrou
 Route::post('/groups/{group}', 'App\Http\Controllers\GroupController@getGroup');
 Route::put('/groups/{group}', 'App\Http\Controllers\GroupController@update');
 Route::delete('/groups/{group}', 'App\Http\Controllers\GroupController@delete');
+
+// specialty
+Route::post('/specialties', 'App\Http\Controllers\SpecialtyController@getSpecialties');
+Route::post('/specialties/all', 'App\Http\Controllers\SpecialtyController@getSpecialtiesWithRelations');
+Route::post('/specialties/create', 'App\Http\Controllers\SpecialtyController@create');
+Route::post('/specialties/{specialty}/all', 'App\Http\Controllers\SpecialtyController@getSpecialtyWithRelations');
+Route::post('/specialties/{specialty}', 'App\Http\Controllers\SpecialtyController@getSpecialty');
+Route::put('/specialties/{specialty}', 'App\Http\Controllers\SpecialtyController@update');
+Route::delete('/specialties/{specialty}', 'App\Http\Controllers\SpecialtyController@delete');
