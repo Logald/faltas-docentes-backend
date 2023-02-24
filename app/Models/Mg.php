@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mg extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $table = 'mg';
+  protected $fillable = [
+    'matterId',
+    'groupId'
+  ];
+  public $timestamps = false;
 }

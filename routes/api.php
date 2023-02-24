@@ -65,3 +65,12 @@ Route::post('/specialties/{specialty}/all', 'App\Http\Controllers\SpecialtyContr
 Route::post('/specialties/{specialty}', 'App\Http\Controllers\SpecialtyController@getSpecialty');
 Route::put('/specialties/{specialty}', 'App\Http\Controllers\SpecialtyController@update');
 Route::delete('/specialties/{specialty}', 'App\Http\Controllers\SpecialtyController@delete');
+
+// mg
+Route::post('/mgs', 'App\Http\Controllers\MgController@getMgs');
+Route::post('/mgs/all', 'App\Http\Controllers\MgController@getMgsWithRelations');
+Route::post('/mgs/create', 'App\Http\Controllers\MgController@create');
+Route::post('/mgs/{mg}/all', 'App\Http\Controllers\MgController@getMgWithRelations');
+Route::post('/mgs/{mg}', 'App\Http\Controllers\MgController@getMg');
+Route::put('/mgs/{mg}', 'App\Http\Controllers\MgController@update');
+Route::delete('/mgs/{mg}', 'App\Http\Controllers\MgController@delete');
