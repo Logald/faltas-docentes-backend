@@ -22,11 +22,6 @@ class ProffessorController extends Controller
     return response()->json($proffessors);
   }
 
-  private function withRelations(object $proffessor)
-  {
-    $proffessor->person = Person::where('id', $proffessor->personId)->first();
-  }
-
   /**
    * Display a listing of the resource.
    *
@@ -51,7 +46,7 @@ class ProffessorController extends Controller
    *
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getPersonWithRelations(Proffessor $proffessor)
+  public function getProffessorWithRelations(Proffessor $proffessor)
   {
     $proffessor->person = Person::where('id', $proffessor->personId)->first();
     return response()->json($proffessor);

@@ -43,7 +43,16 @@ Route::delete('/people/{person}', 'App\Http\Controllers\PersonController@delete'
 Route::post('/proffessors', 'App\Http\Controllers\ProffessorController@getProffessors');
 Route::post('/proffessors/all', 'App\Http\Controllers\ProffessorController@getProffessorsWithRelations');
 Route::post('/proffessors/create', 'App\Http\Controllers\ProffessorController@create');
-Route::post('/proffessors/{proffessor}/all', 'App\Http\Controllers\ProffessorController@getPersonWithRelations');
+Route::post('/proffessors/{proffessor}/all', 'App\Http\Controllers\ProffessorController@getProffessorWithRelations');
 Route::post('/proffessors/{proffessor}', 'App\Http\Controllers\ProffessorController@getProffessor');
 Route::put('/proffessors/{proffessor}', 'App\Http\Controllers\ProffessorController@update');
 Route::delete('/proffessors/{proffessor}', 'App\Http\Controllers\ProffessorController@delete');
+
+// group
+Route::post('/groups', 'App\Http\Controllers\GroupController@getGroups');
+Route::post('/groups/all', 'App\Http\Controllers\GroupController@getGroupsWithRelations');
+Route::post('/groups/create', 'App\Http\Controllers\GroupController@create');
+Route::post('/groups/{group}/all', 'App\Http\Controllers\GroupController@getGroupWithRelations');
+Route::post('/groups/{group}', 'App\Http\Controllers\GroupController@getGroup');
+Route::put('/groups/{group}', 'App\Http\Controllers\GroupController@update');
+Route::delete('/groups/{group}', 'App\Http\Controllers\GroupController@delete');
