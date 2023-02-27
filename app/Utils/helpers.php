@@ -16,12 +16,13 @@ if (!function_exists('searchMany')) {
   {
     foreach ($args as $key => $value) {
       if ($key === 'startDate') {
-        $beforeDay = (new DateTime($value))->format('Y-m-d H-i-s');
-        $data = $data->where($key, '>=', $beforeDay);
+        $startDay = (new DateTime($value))->format('Y-m-d H:i:s');
+        $data = $data->where($key, '>=', $startDay);
         continue;
       }
       if ($key === 'endDate') {
-        $data = $data->where($key, '<=', $value);
+        $endDate = (new DateTime($value))->format('Y-m-d H:i:s');
+        $data = $data->where($key, '<=', $endDate);
         continue;
       }
       $data = $data->where($key, '=', $value);
