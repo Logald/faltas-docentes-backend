@@ -6,9 +6,15 @@ use App\Models\Absence;
 use App\Models\Gmp;
 use App\Models\Turn;
 use Illuminate\Http\Request;
+use DateTime;
 
 class AbsenceController extends Controller
 {
+  private function endAbcenses()
+  {
+    $date = (new DateTime())->modify('-3 hour')->format('Y-m-d H-i-s');
+    Absence::where('endDate', '<', $date)->update(['active' => false]);
+  }
   /**
    * Display a listing of the resource.
    *
@@ -16,6 +22,7 @@ class AbsenceController extends Controller
    */
   public function getAbsences(Request $request)
   {
+    $this->endAbcenses();
     $absences = Absence::all();
     $args = ['id', 'gmpId', 'turnId', 'startDate', 'endDate', 'reason', 'active'];
     $data = getFromRequestIfExist($request, $args);
@@ -30,6 +37,7 @@ class AbsenceController extends Controller
    */
   public function getAbsencesWithRelations(Request $request)
   {
+    $this->endAbcenses();
     $absences = Absence::all();
     $args = ['id', 'gmpId', 'turnId', 'startDate', 'endDate', 'reason', 'active'];
     $data = getFromRequestIfExist($request, $args);
@@ -50,6 +58,7 @@ class AbsenceController extends Controller
    */
   public function getAbsenceWithRelations(Absence $absence)
   {
+    $this->endAbcenses();
     $absence->gmp = Gmp::where('id', $absence->gmpId)->first();
     $absence->turn = Turn::where('id', $absence->turnId)->first();
     return response()->json($absence);
@@ -62,6 +71,7 @@ class AbsenceController extends Controller
    */
   public function getAbsence(Absence $absence)
   {
+    $this->endAbcenses();
     return response()->json($absence);
   }
 
