@@ -13,7 +13,7 @@ class AbsenceController extends Controller
   private function endAbcenses()
   {
     $date = (new DateTime())->modify('-3 hour')->format('Y-m-d H-i-s');
-    Absence::where('endDate', '<', $date)->update(['active' => false]);
+    Absence::where('endDate', '<', $date)->where('active', true)->update(['active' => false]);
   }
   /**
    * Display a listing of the resource.
