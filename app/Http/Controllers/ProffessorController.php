@@ -16,40 +16,16 @@ class ProffessorController extends Controller
   public function getProffessors(Request $request)
   {
     $proffessors = Proffessor::all();
-    $args = ['id', 'personId', 'active'];
+    $args = [
+      'id',
+      'name',
+      'lastname',
+      'ci',
+      'active'
+    ];
     $data = getFromRequestIfExist($request, $args);
     $proffessors = searchMany($proffessors, $data);
     return response()->json($proffessors);
-  }
-
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function getProffessorsWithRelations(Request $request)
-  {
-    $proffessors = Proffessor::all();
-    $args = ['id', 'personId', 'active'];
-    $data = getFromRequestIfExist($request, $args);
-    $proffessors = searchMany($proffessors, $data);
-    $proffessorsWithRelations = [];
-    foreach ($proffessors as $key => $proffessor) {
-      $proffessor->person = Person::where('id', $proffessor->personId)->first();
-      array_push($proffessorsWithRelations, $proffessor);
-    }
-    return response()->json($proffessorsWithRelations);
-  }
-
-  /**
-   * Display a resource.
-   *
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function getProffessorWithRelations(Proffessor $proffessor)
-  {
-    $proffessor->person = Person::where('id', $proffessor->personId)->first();
-    return response()->json($proffessor);
   }
 
   /**
@@ -70,7 +46,9 @@ class ProffessorController extends Controller
   public function create(Request $request)
   {
     Proffessor::create([
-      'personId' => $request->personId,
+      'name' => $request->name,
+      'lastname' => $request->lastname,
+      'ci' => $request->ci,
       'active' => $request->active
     ]);
     return response()->json(true);
@@ -86,7 +64,12 @@ class ProffessorController extends Controller
    */
   public function update(Request $request, Proffessor $proffessor)
   {
-    $args = ['personId', 'active'];
+    $args = [
+      'name',
+      'lastname',
+      'ci',
+      'active'
+    ];
     mergeObjects($args, $proffessor, $request);
     $proffessor->save();
     return response()->json(true);

@@ -14,8 +14,9 @@ return new class extends Migration {
   {
     Schema::create('proffessor', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('personId')->unique();
-      $table->foreign('personId')->references('id')->on('person')->onDelete('cascade');
+      $table->string('name');
+      $table->string('lastname');
+      $table->integer('ci')->unique();
       $table->boolean('active')->default(true);
     });
   }

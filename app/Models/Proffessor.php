@@ -11,7 +11,9 @@ class Proffessor extends Model
 
   protected $table = 'proffessor';
   protected $fillable = [
-    'personId'
+    'name',
+    'lastname',
+    'ci'
   ];
 
   public $timestamps = false;
