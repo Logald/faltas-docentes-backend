@@ -12,15 +12,17 @@ return new class extends Migration {
    */
   public function up()
   {
-    Schema::create('gmp', function (Blueprint $table) {
-      $table->id();
-      $table->unsignedBigInteger('mgId');
-      $table->unsignedBigInteger('proffessorId');
-      $table->boolean('active')->default(true);
-      $table->foreign('mgId')->references('id')->on('mg')->onDelete('cascade');
-      $table->foreign('proffessorId')->references('id')->on('proffessor')->onDelete('cascade');
-      $table->unique(['mgId', 'proffessorId']);
-    });
+    if (!Schema::hasTable('gmp')) {
+      Schema::create('gmp', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('mgId');
+        $table->unsignedBigInteger('proffessorId');
+        $table->boolean('active')->default(true);
+        $table->foreign('mgId')->references('id')->on('mg')->onDelete('cascade');
+        $table->foreign('proffessorId')->references('id')->on('proffessor')->onDelete('cascade');
+        $table->unique(['mgId', 'proffessorId']);
+      });
+    }
   }
 
   /**

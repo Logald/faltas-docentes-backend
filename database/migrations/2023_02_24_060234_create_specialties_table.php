@@ -12,14 +12,16 @@ return new class extends Migration {
    */
   public function up()
   {
-    Schema::create('specialty', function (Blueprint $table) {
-      $table->id();
-      $table->unsignedBigInteger('matterId');
-      $table->unsignedBigInteger('proffessorId');
-      $table->foreign('matterId')->references('id')->on('matter')->onDelete('cascade');
-      $table->foreign('proffessorId')->references('id')->on('proffessor')->onDelete('cascade');
-      $table->unique(['matterId', 'proffessorId']);
-    });
+    if (!Schema::hasTable('specialty')) {
+      Schema::create('specialty', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('matterId');
+        $table->unsignedBigInteger('proffessorId');
+        $table->foreign('matterId')->references('id')->on('matter')->onDelete('cascade');
+        $table->foreign('proffessorId')->references('id')->on('proffessor')->onDelete('cascade');
+        $table->unique(['matterId', 'proffessorId']);
+      });
+    }
   }
 
   /**

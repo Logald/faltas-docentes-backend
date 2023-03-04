@@ -12,16 +12,18 @@ return new class extends Migration {
    */
   public function up()
   {
-    Schema::create('group', function (Blueprint $table) {
-      $table->id();
-      $table->integer('grade');
-      $table->string('name');
-      $table->string('description')->nullable();
-      $table->unsignedBigInteger('turnId');
-      $table->boolean('active')->default(true);
-      $table->foreign('turnId')->references('id')->on('turn')->onDelete('cascade');
-      $table->unique(['name', 'grade']);
-    });
+    if (!Schema::hasTable('group')) {
+      Schema::create('group', function (Blueprint $table) {
+        $table->id();
+        $table->integer('grade');
+        $table->string('name');
+        $table->string('description')->nullable();
+        $table->unsignedBigInteger('turnId');
+        $table->boolean('active')->default(true);
+        $table->foreign('turnId')->references('id')->on('turn')->onDelete('cascade');
+        $table->unique(['name', 'grade']);
+      });
+    }
   }
 
   /**

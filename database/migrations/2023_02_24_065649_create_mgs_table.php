@@ -12,14 +12,16 @@ return new class extends Migration {
    */
   public function up()
   {
-    Schema::create('mg', function (Blueprint $table) {
-      $table->id();
-      $table->unsignedBigInteger('matterId');
-      $table->unsignedBigInteger('groupId');
-      $table->foreign('matterId')->references('id')->on('matter')->onDelete('cascade');
-      $table->foreign('groupId')->references('id')->on('group')->onDelete('cascade');
-      $table->unique(['matterId', 'groupId']);
-    });
+    if (!Schema::hasTable('mg')) {
+      Schema::create('mg', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('matterId');
+        $table->unsignedBigInteger('groupId');
+        $table->foreign('matterId')->references('id')->on('matter')->onDelete('cascade');
+        $table->foreign('groupId')->references('id')->on('group')->onDelete('cascade');
+        $table->unique(['matterId', 'groupId']);
+      });
+    }
   }
 
   /**

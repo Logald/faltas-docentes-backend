@@ -12,13 +12,15 @@ return new class extends Migration {
    */
   public function up()
   {
-    Schema::create('proffessor', function (Blueprint $table) {
-      $table->id();
-      $table->string('name');
-      $table->string('lastname');
-      $table->integer('ci')->unique();
-      $table->boolean('active')->default(true);
-    });
+    if (!Schema::hasTable('proffessor')) {
+      Schema::create('proffessor', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('lastname');
+        $table->integer('ci')->unique();
+        $table->boolean('active')->default(true);
+      });
+    }
   }
 
   /**

@@ -12,17 +12,20 @@ return new class extends Migration {
    */
   public function up()
   {
-    Schema::create('absence', function (Blueprint $table) {
-      $table->id();
-      $table->unsignedBigInteger('gmpId');
-      $table->unsignedBigInteger('turnId');
-      $table->dateTime('startDate');
-      $table->dateTime('endDate');
-      $table->string('reason')->nullable();
-      $table->boolean('active')->default(true);
-      $table->foreign('gmpId')->references('id')->on('gmp')->onDelete('cascade');
-      $table->foreign('turnId')->references('id')->on('turn')->onDelete('cascade');
-    });
+    if (!Schema::hasTable('absence')) {
+      Schema::create('absence', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('gmpId');
+        $table->unsignedBigInteger('turnId');
+        $table->dateTime('startDate');
+        $table->dateTime('endDate');
+        $table->string('reason')->nullable();
+        $table->boolean('active')->default(true);
+        $table->foreign('gmpId')->references('id')->on('gmp')->onDelete('cascade');
+        $table->foreign('turnId')->references('id')->on('turn')->onDelete('cascade');
+      });
+    }
+
   }
 
   /**
