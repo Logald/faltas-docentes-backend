@@ -45,12 +45,9 @@ class ProffessorController extends Controller
    */
   public function create(Request $request)
   {
-    Proffessor::create([
-      'name' => $request->name,
-      'lastname' => $request->lastname,
-      'ci' => $request->ci,
-      'active' => $request->active
-    ]);
+    $proffessor = new Proffessor();
+    mergeObjects($request->keys(), $proffessor, $request->all());
+    $proffessor->save();
     return response()->json(true);
   }
 

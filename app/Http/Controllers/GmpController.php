@@ -75,11 +75,9 @@ class GmpController extends Controller
   {
     $exists = Gmp::where('mgId', $request->mgId)->where('active', true)->first();
     if (!$exists) {
-      Gmp::create([
-        'mgId' => $request->mgId,
-        'proffessorId' => $request->proffessorId,
-        'active' => $request->active
-      ]);
+      $gmp = new Gmp();
+      mergeObjects($request->keys(), $gmp, $request->all());
+      $gmp->save();
       return response()->json(true);
     }
     return throw new HttpException(302, 'Exist');

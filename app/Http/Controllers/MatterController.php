@@ -38,10 +38,9 @@ class MatterController extends Controller
    */
   public function create(Request $request)
   {
-    Matter::create([
-      'name' => $request->name,
-      'description' => $request->description
-    ]);
+    $matter = new Matter();
+    mergeObjects($request->keys(), $matter, $request->all());
+    $matter->save();
     return response()->json(true);
   }
 

@@ -38,9 +38,9 @@ class TurnController extends Controller
    */
   public function create(Request $request)
   {
-    Turn::create([
-      'name' => $request->name
-    ]);
+    $turn = new Turn();
+    mergeObjects($request->keys(), $turn, $request->all());
+    $turn->save();
     return response()->json(true);
   }
 

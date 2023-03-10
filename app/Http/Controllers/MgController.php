@@ -72,10 +72,9 @@ class MgController extends Controller
    */
   public function create(Request $request)
   {
-    Mg::create([
-      'matterId' => $request->matterId,
-      'groupId' => $request->groupId
-    ]);
+    $mg = new Mg();
+    mergeObjects($request->keys(), $mg, $request->all());
+    $mg->save();
     return response()->json(true);
   }
 

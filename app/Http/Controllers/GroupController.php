@@ -71,7 +71,6 @@ class GroupController extends Controller
   {
     $group = new Group();
     mergeObjects($request->keys(), $group, $request->all());
-    // $data = toJson($request->all());
     $group->save();
     return response()->json(true);
   }

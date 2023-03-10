@@ -38,11 +38,9 @@ class PersonController extends Controller
    */
   public function create(Request $request)
   {
-    Person::create([
-      'name' => $request->name,
-      'lastname' => $request->lastname,
-      'ci' => $request->ci
-    ]);
+    $person = new Person();
+    mergeObjects($request->keys(), $person, $request->all());
+    $person->save();
     return response()->json(true);
   }
 

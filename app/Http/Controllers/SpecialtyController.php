@@ -72,10 +72,9 @@ class SpecialtyController extends Controller
    */
   public function create(Request $request)
   {
-    Specialty::create([
-      'matterId' => $request->matterId,
-      'proffessorId' => $request->proffessorId
-    ]);
+    $specialty = new Specialty();
+    mergeObjects($request->keys(), $specialty, $request->all());
+    $specialty->save();
     return response()->json(true);
   }
 
