@@ -69,13 +69,10 @@ class GroupController extends Controller
    */
   public function create(Request $request)
   {
-    Group::create([
-      'grade' => $request->grade,
-      'name' => $request->name,
-      'description' => $request->description,
-      'turnId' => $request->turnId,
-      'active' => $request->active
-    ]);
+    $group = new Group();
+    mergeObjects($request->keys(), $group, $request->all());
+    // $data = toJson($request->all());
+    $group->save();
     return response()->json(true);
   }
 

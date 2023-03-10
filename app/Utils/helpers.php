@@ -67,7 +67,7 @@ if (!function_exists('getFromRequestIfExist')) {
  */
 
 if (!function_exists('mergeObjects')) {
-  function mergeObjects(array $params, object &$object1, object $object2)
+  function mergeObjects(array $params, object &$object1, mixed $object2)
   {
     foreach ($params as $key => $value) {
       if (isset($object2[$value]))
