@@ -82,14 +82,9 @@ class AbsenceController extends Controller
    */
   public function create(Request $request)
   {
-    Absence::create([
-      'gmpId' => $request->gmpId,
-      'turnId' => $request->turnId,
-      'startDate' => $request->startDate,
-      'endDate' => $request->endDate,
-      'reason' => $request->reason,
-      'active' => $request->active
-    ]);
+    $absence = new Absence();
+    mergeObjects($request->keys(), $absence, $request->all());
+    $absence->save();
     return response()->json(true);
   }
 
