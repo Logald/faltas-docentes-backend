@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Turn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TurnController extends Controller
 {
@@ -14,7 +15,7 @@ class TurnController extends Controller
    */
   public function getTurns(Request $request)
   {
-    $turns = Turn::all();
+    $turns = Cache::remember('turns', CACHE_TIME, fn() => Turn::all());
     $args = ['id', 'name'];
     $data = getFromRequestIfExist($request, $args);
     $turns = searchMany($turns, $data);

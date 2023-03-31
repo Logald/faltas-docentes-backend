@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
  *
  */
 
+define('CACHE_TIME', 5);
 
 if (!function_exists('searchMany')) {
   function searchMany(Collection $data, array $args)

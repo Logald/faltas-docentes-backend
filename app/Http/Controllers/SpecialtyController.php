@@ -6,6 +6,7 @@ use App\Models\Specialty;
 use App\Models\Matter;
 use App\Models\Proffessor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SpecialtyController extends Controller
 {
@@ -16,7 +17,7 @@ class SpecialtyController extends Controller
    */
   public function getSpecialties(Request $request)
   {
-    $specialties = Specialty::all();
+    $specialties = Cache::remember('specialties', CACHE_TIME, fn() => Specialty::all());
     $args = ['id', 'matterId', 'proffessorId'];
     $data = getFromRequestIfExist($request, $args);
     $specialties = searchMany($specialties, $data);
@@ -30,7 +31,7 @@ class SpecialtyController extends Controller
    */
   public function getSpecialtiesWithRelations(Request $request)
   {
-    $specialties = Specialty::all();
+    $specialties = Cache::remember('specialties', CACHE_TIME, fn() => Specialty::all());
     $args = ['id', 'matterId', 'proffessorId'];
     $data = getFromRequestIfExist($request, $args);
     $specialties = searchMany($specialties, $data);

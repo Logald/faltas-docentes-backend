@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use App\Models\Proffessor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ProffessorController extends Controller
 {
@@ -15,7 +16,7 @@ class ProffessorController extends Controller
    */
   public function getProffessors(Request $request)
   {
-    $proffessors = Proffessor::all();
+    $proffessors = Cache::remember('proffessors', CACHE_TIME, fn() => Proffessor::all());
     $args = [
       'id',
       'name',

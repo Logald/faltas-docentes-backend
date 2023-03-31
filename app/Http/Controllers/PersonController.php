@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PersonController extends Controller
 {
@@ -14,7 +15,7 @@ class PersonController extends Controller
    */
   public function getPeople(Request $request)
   {
-    $people = Person::all();
+    $people = Cache::remember('people', CACHE_TIME, fn() => Person::all());
     $args = ['id', 'name', 'lastname', 'ci'];
     $data = getFromRequestIfExist($request, $args);
     $people = searchMany($people, $data);

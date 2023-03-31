@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Matter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MatterController extends Controller
 {
@@ -14,7 +15,7 @@ class MatterController extends Controller
    */
   public function getMatters(Request $request)
   {
-    $matters = Matter::all();
+    $matters = Cache::remember('matters', CACHE_TIME, fn() => Matter::all());
     $args = ['id', 'name', 'description'];
     $data = getFromRequestIfExist($request, $args);
     $matters = searchMany($matters, $data);

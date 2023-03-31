@@ -6,6 +6,7 @@ use App\Models\Absence;
 use App\Models\Gmp;
 use App\Models\Turn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use DateTime;
 
 class AbsenceController extends Controller
@@ -23,7 +24,7 @@ class AbsenceController extends Controller
   public function getAbsences(Request $request)
   {
     $this->endAbcenses();
-    $absences = Absence::all();
+    $absences = Cache::remember('absences', CACHE_TIME, fn() => Absence::all());
     $args = ['id', 'gmpId', 'turnId', 'startDate', 'endDate', 'reason', 'active'];
     $data = getFromRequestIfExist($request, $args);
     $absences = searchMany($absences, $data);
@@ -38,7 +39,7 @@ class AbsenceController extends Controller
   public function getAbsencesWithRelations(Request $request)
   {
     $this->endAbcenses();
-    $absences = Absence::all();
+    $absences = Cache::remember('absences', CACHE_TIME, fn() => Absence::all());
     $args = ['id', 'gmpId', 'turnId', 'startDate', 'endDate', 'reason', 'active'];
     $data = getFromRequestIfExist($request, $args);
     $absences = searchMany($absences, $data);

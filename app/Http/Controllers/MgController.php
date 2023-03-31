@@ -6,6 +6,7 @@ use App\Models\Mg;
 use App\Models\Matter;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MgController extends Controller
 {
@@ -16,7 +17,7 @@ class MgController extends Controller
    */
   public function getMgs(Request $request)
   {
-    $mgs = Mg::all();
+    $mgs = Cache::remember('mgs', CACHE_TIME, fn() => Mg::all());
     $args = ['id', 'matterId', 'groupId'];
     $data = getFromRequestIfExist($request, $args);
     $mgs = searchMany($mgs, $data);
@@ -30,7 +31,7 @@ class MgController extends Controller
    */
   public function getMgsWithRelations(Request $request)
   {
-    $mgs = Mg::all();
+    $mgs = Cache::remember('mgs', CACHE_TIME, fn() => Mg::all());
     $args = ['id', 'matterId', 'groupId'];
     $data = getFromRequestIfExist($request, $args);
     $mgs = searchMany($mgs, $data);

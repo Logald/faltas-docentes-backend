@@ -7,6 +7,7 @@ use App\Models\Mg;
 use App\Models\Proffessor;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Support\Facades\Cache;
 
 class GmpController extends Controller
 {
@@ -17,7 +18,7 @@ class GmpController extends Controller
    */
   public function getGmps(Request $request)
   {
-    $gmps = Gmp::all();
+    $gmps = Cache::remember('gmps', CACHE_TIME, fn() => Gmp::all());
     $args = ['id', 'mgId', 'proffessorId', 'active'];
     $data = getFromRequestIfExist($request, $args);
     $gmps = searchMany($gmps, $data);
@@ -31,7 +32,7 @@ class GmpController extends Controller
    */
   public function getGmpsWithRelations(Request $request)
   {
-    $gmps = Gmp::all();
+    $gmps = Cache::remember('gmps', CACHE_TIME, fn() => Gmp::all());
     $args = ['id', 'mgId', 'proffessorId', 'active'];
     $data = getFromRequestIfExist($request, $args);
     $gmps = searchMany($gmps, $data);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\Turn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class GroupController extends Controller
 {
@@ -15,7 +16,7 @@ class GroupController extends Controller
    */
   public function getGroups(Request $request)
   {
-    $groups = Group::all();
+    $groups = Cache::remember('groups', CACHE_TIME, fn() => Group::all());
     $args = ['id', 'grade', 'name', 'description', 'turnId', 'active'];
     $data = getFromRequestIfExist($request, $args);
     $groups = searchMany($groups, $data);
@@ -29,7 +30,7 @@ class GroupController extends Controller
    */
   public function getGroupsWithRelations(Request $request)
   {
-    $groups = Group::all();
+    $groups = Cache::remember('groups', CACHE_TIME, fn() => Group::all());
     $args = ['id', 'grade', 'name', 'description', 'turnId', 'active'];
     $data = getFromRequestIfExist($request, $args);
     $groups = searchMany($groups, $data);
