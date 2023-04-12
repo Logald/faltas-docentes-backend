@@ -18,9 +18,7 @@ class MgController extends Controller
   public function getMgs(Request $request)
   {
     $mgs = Cache::remember('mgs', CACHE_TIME, fn() => Mg::all());
-    $args = ['id', 'matterId', 'groupId'];
-    $data = getFromRequestIfExist($request, $args);
-    $mgs = searchMany($mgs, $data);
+    $mgs = searchMany($mgs, $request->all());
     return response()->json($mgs);
   }
 
@@ -32,9 +30,7 @@ class MgController extends Controller
   public function getMgsWithRelations(Request $request)
   {
     $mgs = Cache::remember('mgs', CACHE_TIME, fn() => Mg::all());
-    $args = ['id', 'matterId', 'groupId'];
-    $data = getFromRequestIfExist($request, $args);
-    $mgs = searchMany($mgs, $data);
+    $mgs = searchMany($mgs, $request->all());
     $mgsWithRelations = [];
     foreach ($mgs as $key => $mg) {
       $mg->matter = Matter::where('id', $mg->matterId)->first();
@@ -89,8 +85,7 @@ class MgController extends Controller
    */
   public function update(Request $request, Mg $mg)
   {
-    $args = ['matterId', 'groupId'];
-    mergeObjects($args, $mg, $request);
+    mergeObjects($request->keys(), $mg, $request->all());
     $mg->save();
     return response()->json(true);
   }

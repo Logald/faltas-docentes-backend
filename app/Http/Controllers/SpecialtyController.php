@@ -18,9 +18,7 @@ class SpecialtyController extends Controller
   public function getSpecialties(Request $request)
   {
     $specialties = Cache::remember('specialties', CACHE_TIME, fn() => Specialty::all());
-    $args = ['id', 'matterId', 'proffessorId'];
-    $data = getFromRequestIfExist($request, $args);
-    $specialties = searchMany($specialties, $data);
+    $specialties = searchMany($specialties, $request->all());
     return response()->json($specialties);
   }
 
@@ -32,9 +30,7 @@ class SpecialtyController extends Controller
   public function getSpecialtiesWithRelations(Request $request)
   {
     $specialties = Cache::remember('specialties', CACHE_TIME, fn() => Specialty::all());
-    $args = ['id', 'matterId', 'proffessorId'];
-    $data = getFromRequestIfExist($request, $args);
-    $specialties = searchMany($specialties, $data);
+    $specialties = searchMany($specialties, $request->all());
     $specialtiesWithRelations = [];
     foreach ($specialties as $key => $specialty) {
       $specialty->matter = Matter::where('id', $specialty->matterId)->first();
@@ -89,8 +85,7 @@ class SpecialtyController extends Controller
    */
   public function update(Request $request, Specialty $specialty)
   {
-    $args = ['matterId', 'proffessorId'];
-    mergeObjects($args, $specialty, $request);
+    mergeObjects($request->keys(), $specialty, $request->all());
     $specialty->save();
     return response()->json(true);
   }

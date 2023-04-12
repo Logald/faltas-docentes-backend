@@ -16,9 +16,7 @@ class PersonController extends Controller
   public function getPeople(Request $request)
   {
     $people = Cache::remember('people', CACHE_TIME, fn() => Person::all());
-    $args = ['id', 'name', 'lastname', 'ci'];
-    $data = getFromRequestIfExist($request, $args);
-    $people = searchMany($people, $data);
+    $people = searchMany($people, $request->all());
     return response()->json($people);
   }
 
@@ -55,8 +53,7 @@ class PersonController extends Controller
    */
   public function update(Request $request, Person $person)
   {
-    $args = ['name', 'lastname', 'ci'];
-    mergeObjects($args, $person, $request);
+    mergeObjects($request->keys(), $person, $request->all());
     $person->save();
     return response()->json(true);
   }

@@ -19,9 +19,7 @@ class GmpController extends Controller
   public function getGmps(Request $request)
   {
     $gmps = Cache::remember('gmps', CACHE_TIME, fn() => Gmp::all());
-    $args = ['id', 'mgId', 'proffessorId', 'active'];
-    $data = getFromRequestIfExist($request, $args);
-    $gmps = searchMany($gmps, $data);
+    $gmps = searchMany($gmps, $request->all());
     return response()->json($gmps);
   }
 
@@ -33,9 +31,7 @@ class GmpController extends Controller
   public function getGmpsWithRelations(Request $request)
   {
     $gmps = Cache::remember('gmps', CACHE_TIME, fn() => Gmp::all());
-    $args = ['id', 'mgId', 'proffessorId', 'active'];
-    $data = getFromRequestIfExist($request, $args);
-    $gmps = searchMany($gmps, $data);
+    $gmps = searchMany($gmps, $request->all());
     $gmpsWithRelations = [];
     foreach ($gmps as $key => $gmp) {
       $gmp->mg = Mg::where('id', $gmp->mgId)->first();
@@ -99,8 +95,7 @@ class GmpController extends Controller
       if ($exists)
         return throw new HttpException(302, 'Exist');
     }
-    $args = ['mgId', 'proffessorId', 'active'];
-    mergeObjects($args, $gmp, $request);
+    mergeObjects($request->keys(), $gmp, $request->all());
     $gmp->save();
     return response()->json(true);
   }

@@ -17,9 +17,7 @@ class GroupController extends Controller
   public function getGroups(Request $request)
   {
     $groups = Cache::remember('groups', CACHE_TIME, fn() => Group::all());
-    $args = ['id', 'grade', 'name', 'description', 'turnId', 'active'];
-    $data = getFromRequestIfExist($request, $args);
-    $groups = searchMany($groups, $data);
+    $groups = searchMany($groups, $request->all());
     return response()->json($groups);
   }
 
@@ -31,9 +29,7 @@ class GroupController extends Controller
   public function getGroupsWithRelations(Request $request)
   {
     $groups = Cache::remember('groups', CACHE_TIME, fn() => Group::all());
-    $args = ['id', 'grade', 'name', 'description', 'turnId', 'active'];
-    $data = getFromRequestIfExist($request, $args);
-    $groups = searchMany($groups, $data);
+    $groups = searchMany($groups, $request->all());
     $groupsWithRelations = [];
     foreach ($groups as $key => $group) {
       $group->turn = Turn::where('id', $group->turnId)->first();
@@ -86,8 +82,7 @@ class GroupController extends Controller
    */
   public function update(Request $request, Group $group)
   {
-    $args = ['grade', 'name', 'description', 'turnId', 'active'];
-    mergeObjects($args, $group, $request);
+    mergeObjects($request->keys(), $group, $request->all());
     $group->save();
     return response()->json(true);
   }

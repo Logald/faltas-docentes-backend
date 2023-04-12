@@ -17,15 +17,7 @@ class ProffessorController extends Controller
   public function getProffessors(Request $request)
   {
     $proffessors = Cache::remember('proffessors', CACHE_TIME, fn() => Proffessor::all());
-    $args = [
-      'id',
-      'name',
-      'lastname',
-      'ci',
-      'active'
-    ];
-    $data = getFromRequestIfExist($request, $args);
-    $proffessors = searchMany($proffessors, $data);
+    $proffessors = searchMany($proffessors, $request->all());
     return response()->json($proffessors);
   }
 
@@ -62,13 +54,7 @@ class ProffessorController extends Controller
    */
   public function update(Request $request, Proffessor $proffessor)
   {
-    $args = [
-      'name',
-      'lastname',
-      'ci',
-      'active'
-    ];
-    mergeObjects($args, $proffessor, $request);
+    mergeObjects($request->keys(), $proffessor, $request->all());
     $proffessor->save();
     return response()->json(true);
   }

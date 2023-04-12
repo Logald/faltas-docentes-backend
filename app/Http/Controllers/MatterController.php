@@ -16,9 +16,7 @@ class MatterController extends Controller
   public function getMatters(Request $request)
   {
     $matters = Cache::remember('matters', CACHE_TIME, fn() => Matter::all());
-    $args = ['id', 'name', 'description'];
-    $data = getFromRequestIfExist($request, $args);
-    $matters = searchMany($matters, $data);
+    $matters = searchMany($matters, $request->all());
     return response()->json($matters);
   }
 
@@ -55,8 +53,7 @@ class MatterController extends Controller
    */
   public function update(Request $request, Matter $matter)
   {
-    $args = ['name', 'description'];
-    mergeObjects($args, $matter, $request);
+    mergeObjects($request->keys(), $matter, $request->all());
     $matter->save();
     return response()->json(true);
   }

@@ -25,9 +25,7 @@ class AbsenceController extends Controller
   {
     $this->endAbcenses();
     $absences = Cache::remember('absences', CACHE_TIME, fn() => Absence::all());
-    $args = ['id', 'gmpId', 'turnId', 'startDate', 'endDate', 'reason', 'active'];
-    $data = getFromRequestIfExist($request, $args);
-    $absences = searchMany($absences, $data);
+    $absences = searchMany($absences, $request->all());
     return response()->json($absences);
   }
 
@@ -40,9 +38,7 @@ class AbsenceController extends Controller
   {
     $this->endAbcenses();
     $absences = Cache::remember('absences', CACHE_TIME, fn() => Absence::all());
-    $args = ['id', 'gmpId', 'turnId', 'startDate', 'endDate', 'reason', 'active'];
-    $data = getFromRequestIfExist($request, $args);
-    $absences = searchMany($absences, $data);
+    $absences = searchMany($absences, $request->all());
     $mgsWithRelations = [];
     foreach ($absences as $key => $absence) {
       $absence->gmp = Gmp::where('id', $absence->gmpId)->first();
@@ -99,8 +95,7 @@ class AbsenceController extends Controller
    */
   public function update(Request $request, Absence $absence)
   {
-    $args = ['gmpId', 'turnId', 'startDate', 'endDate', 'reason', 'active'];
-    mergeObjects($args, $absence, $request);
+    mergeObjects($request->keys(), $absence, $request->all());
     $absence->save();
     return response()->json(true);
   }

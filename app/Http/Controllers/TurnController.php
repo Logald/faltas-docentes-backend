@@ -16,9 +16,7 @@ class TurnController extends Controller
   public function getTurns(Request $request)
   {
     $turns = Cache::remember('turns', CACHE_TIME, fn() => Turn::all());
-    $args = ['id', 'name'];
-    $data = getFromRequestIfExist($request, $args);
-    $turns = searchMany($turns, $data);
+    $turns = searchMany($turns, $request->all());
     return response()->json($turns);
   }
 
@@ -55,8 +53,7 @@ class TurnController extends Controller
    */
   public function update(Request $request, Turn $turn)
   {
-    $args = ['name'];
-    mergeObjects($args, $turn, $request);
+    mergeObjects($request->keys(), $turn, $request->all());
     $turn->save();
     return response()->json(true);
   }
