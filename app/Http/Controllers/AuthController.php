@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -27,6 +28,34 @@ class AuthController extends Controller
     return response()->json([
       'token' => $token
     ]);
+  }
+
+  public function getAll(Request $request)
+  {
+    $users = Cache::remember('users', CACHE_TIME, fn() => User::all());
+    $users = searchMany($users, $request->all());
+    return $users;
+  }
+
+  public function getOne(User $user)
+  {
+    return $user;
+  }
+
+  public function update(User $user, Request $request)
+  {
+    mergeObjects($request->keys(), $user, $request->all());
+    if (isset($request->password)) {
+      $user->password = Hash::make($request->password);
+    }
+    $user->save();
+    return response()->json(true);
+  }
+
+  public function delete(User $user)
+  {
+    $user->delete();
+    return response()->json(true);
   }
 
   /**

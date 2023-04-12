@@ -25,6 +25,12 @@ Route::post('/users/signin', 'App\Http\Controllers\AuthController@signin');
 
 Route::middleware(['auth:sanctum'])->group(function () {
   // Auth routes
+  // Users
+  Route::post('/users', 'App\Http\Controllers\AuthController@getAll');
+  Route::get('/users/{user}', 'App\Http\Controllers\AuthController@getOne');
+  Route::put('/users/{user}', 'App\Http\Controllers\AuthController@update');
+  Route::delete('/users/{user}', 'App\Http\Controllers\AuthController@delete');
+
   // Turns
   Route::post('/turns', 'App\Http\Controllers\TurnController@getTurns');
   Route::post('/turns/create', 'App\Http\Controllers\TurnController@create');
