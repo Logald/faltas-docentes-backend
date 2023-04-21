@@ -21,8 +21,7 @@ class AuthController extends Controller
   {
     $user = User::create([
       'name' => $request->name,
-      'password' => Hash::make($request->password),
-      'profileId' => $request->profileId
+      'password' => Hash::make($request->password)
     ]);
     $token = $user->createToken('auth_token')->plainTextToken;
     return response()->json([
@@ -64,7 +63,11 @@ class AuthController extends Controller
   public function signIn(Request $request)
   {
     if (!Auth::attempt($request->only(['name', 'password'])))
-      return throw new HttpException(401, 'Unauthorized');
+      return response()->json([
+        'name' => $request->name,
+        'password' => $request->password
+      ]);
+    // return throw new HttpException(401, 'Unauthorized');
     $user = User::where('name', $request->name)->firstOrFail();
     $token = $user->createToken('auth_token')->plainTextToken;
     return response()->json([
