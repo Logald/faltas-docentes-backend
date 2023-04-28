@@ -21,11 +21,13 @@ class AuthController extends Controller
   {
     $user = User::create([
       'name' => $request->name,
-      'password' => Hash::make($request->password)
+      'password' => Hash::make($request->password),
+      'type' => $request->type ? $request->type : 'Adscrito',
     ]);
     $token = $user->createToken('auth_token')->plainTextToken;
     return response()->json([
-      'token' => $token
+      'token' => $token,
+      'type' => $user->type
     ]);
   }
 
@@ -71,7 +73,8 @@ class AuthController extends Controller
     $user = User::where('name', $request->name)->firstOrFail();
     $token = $user->createToken('auth_token')->plainTextToken;
     return response()->json([
-      'token' => $token
+      'token' => $token,
+      'type' => $user->type
     ]);
   }
 

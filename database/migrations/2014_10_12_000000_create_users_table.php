@@ -17,7 +17,7 @@ return new class extends Migration {
         $table->id();
         $table->string('name')->unique();
         $table->string('password');
-        $table->enum('type', ['admin', 'user'])->default('user');
+        $table->enum('type', ['Director', 'Administrativo', 'Adscrito'])->default('Adscrito');
         $table->boolean('active')->default(true);
       });
     }

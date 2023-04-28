@@ -10,9 +10,9 @@ class AdminUserSeeder extends Seeder
   public function run()
   {
     User::firstOrCreate([
-      'name' => 'admin',
+      'name' => 'Administrador',
       'password' => '$2y$10$uRvpgdadTqTleZzDBamJjejuEwiTTsdxFBP3I5Ke/zMuuZZa9xitC',
-      'type' => 'admin',
+      'type' => 'Director',
     ]);
   }
 }
