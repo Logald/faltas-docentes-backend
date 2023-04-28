@@ -11,7 +11,8 @@ class AdminUserSeeder extends Seeder
   {
     User::firstOrCreate([
       'name' => 'admin',
-      'password' => '$2y$10$uRvpgdadTqTleZzDBamJjejuEwiTTsdxFBP3I5Ke/zMuuZZa9xitC'
+      'password' => '$2y$10$uRvpgdadTqTleZzDBamJjejuEwiTTsdxFBP3I5Ke/zMuuZZa9xitC',
+      'type' => 'admin',
     ]);
   }
 }
