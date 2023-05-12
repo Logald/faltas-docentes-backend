@@ -15,7 +15,8 @@ return new class extends Migration {
     if (!Schema::hasTable('matter')) {
       Schema::create('matter', function (Blueprint $table) {
         $table->id();
-        $table->string('name')->unique();
+        $table->string('code')->unique();
+        $table->string('name');
         $table->string('description')->nullable(true);
       });
     }
