@@ -10,6 +10,7 @@ class Matter extends Model
   use HasFactory;
   protected $table = 'matter';
   protected $fillable = [
+    'code',
     'name',
     'description'
   ];
