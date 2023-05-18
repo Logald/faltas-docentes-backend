@@ -19,7 +19,7 @@ return new class extends Migration {
         $table->string('password');
         $table->string('firstname');
         $table->string('lastname');
-        $table->enum('type', ['Director', 'Administrativo', 'Adscrito'])->default('Adscrito');
+        $table->enum('type', ['Director', 'Administrativo', 'Adscripto'])->default('Adscripto');
         $table->boolean('active')->default(true);
       });
     }
