@@ -20,13 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // user
-Route::post('/users/signup', 'App\Http\Controllers\AuthController@signup');
 Route::post('/users/signin', 'App\Http\Controllers\AuthController@signin');
 
 Route::middleware(['auth:sanctum'])->group(function () {
   // Auth routes
   // Users
   Route::post('/users', 'App\Http\Controllers\AuthController@getAll');
+  Route::post('/users/signup', 'App\Http\Controllers\AuthController@signup');
   Route::get('/users/{user}', 'App\Http\Controllers\AuthController@getOne');
   Route::put('/users/{user}', 'App\Http\Controllers\AuthController@update');
   Route::delete('/users/{user}', 'App\Http\Controllers\AuthController@delete');
